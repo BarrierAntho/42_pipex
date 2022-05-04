@@ -112,7 +112,7 @@ flowchart LR
         strjoin[[strjoin]]
         strjoinError{isNull}
         access{{access}}
-        accessError{{isError}}
+        accessError{isError}
     end
 
     START --> input
@@ -120,7 +120,7 @@ flowchart LR
     split --> splitError
     splitError --> |yes| ERR
     splitError --> |no| split0
-    split0 -->i
+    split0 --> strjoin
     envPath --> strjoin
     strjoin --> strjoinError
     strjoinError --> |yes| ERR

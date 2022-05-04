@@ -63,9 +63,74 @@ int	main(int argc, char **argv, char **envp)
 	- [ ] Split the command to get the command and its parameters
 	- [ ] Check access permission with `access(const char *pathname, int mode)` where mode = X\_OK`  
 	- [ ] Check if binary command with `execve(const char *pathname, char *const argv[],char *const envp[])`  
-:warning: _The priority of error in a pipe is : file, command
+:warning: _The priority of error in a pipe is : file, command  
 :bangbang: _Use open "O_DIRECTORY" to know if the object is a directory_  
 :bangbang: _Use open "O_CREAT" to create the output file_  
+
+**GLOBAL**
+```mermaid
+flowchart LR
+    START((START))
+    END((End))
+    ERR((ERROR))
+    Main(main)
+    CheckArgc[[check argc]]
+    ArgcError{argc}
+    Pipe[[pipe]]
+    PipeError{isError}
+    Fork[[fork]]
+    Parent{{Parent Process}}
+    Child{{Child Process}}
+
+    START --> Main
+    Main --> CheckArgc
+    CheckArgc --> ArgcError
+    ArgcError --> |!=5| ERR
+    ArgcError --> |=5| Pipe
+    Pipe --> PipeError
+    PipeError --> |yes| ERR
+    PipeError --> |no| Fork
+    Fork --> |pid = 0| Parent
+    Fork --> |pid != 0| Child
+    Fork --> |pid = -1| ERR
+    ERR --> |return != 0| END
+```
+
+**Get command fullname**
+```mermaid
+flowchart LR
+    START((START))
+    END((End))
+    ERR((ERROR))
+    input>ls -alt]
+    split[[split]]
+    splitError{isNull}
+    split0>split 0]
+    subgraph envLoop
+        i[[i++]]
+        envPath>env path i]
+        strjoin[[strjoin]]
+        strjoinError{isNull}
+        access{{access}}
+        accessError{{isError}}
+    end
+
+    START --> input
+    input --> split
+    split --> splitError
+    splitError --> |yes| ERR
+    splitError --> |no| split0
+    split0 -->i
+    envPath --> strjoin
+    strjoin --> strjoinError
+    strjoinError --> |yes| ERR
+    strjoinError --> |no| access
+    access --> accessError
+    accessError --> |-1| i
+    accessError --> |return command fullname| END
+    accessError --> |-1 & i max| ERR
+    i --> envPath
+```
 
 ```mermaid
 flowchart LR
@@ -88,6 +153,7 @@ flowchart LR
     NEXT & ERR --> END
 ```
 
+**Check access **
 ```mermaid
 flowchart LR
     START((START))
@@ -95,7 +161,7 @@ flowchart LR
     IsError{isError}
     IsExist{isExist}
     IsFile{isFile}
-    open[[open witf O_DIRECTORY]]
+    open[[open with O_DIRECTORY]]
     AccessExist[[access with F_OK]]
     AccessFile[[access with R_OK & W_OK]]
     AccessDir[[access with X_OK]]
@@ -150,16 +216,22 @@ int execve(const char *pathname, char *const argv[], char *const envp[]);
 
 **Detail:**
 `pathname` : is the binary command full path
-`argv` : is the pointer of the command's argument array
+`argv` : is the pointer of the command following by its argument
 `envp` : is environment passed to the new program
 
 > Exemple:
 ```c
-execve(argv[1], &argv[1], envp);
+int	main(int argc, char **argv, char **envp)
+{
+	...
+	execve(argv[1], &argv[1], envp);
+	...
+}
 ```
 ```shell
 ./pipex /usr/bin/ls "-alt"
 ```
+:warning: _argv from execve is `&argv[1]` because of adress shifting then &argv[1] = /usr/bin/ls "-alt"
 
 > Result:
 ```shell
@@ -180,7 +252,7 @@ drwxr-xr-x  5 abarrier 2021_paris  4096 May  4 09:56 ..
 `< file1 cat | wc -l > file2`  
 
 ### Use case "file and command error, permission"
-`< fvdile1 sdvfdbdf | bdfbvvb "YOYOYOYOY" | wc -l > test4/file20`
+`< fvdile1 sdvfdbdf | bdfbvvb "YOYOYOYOY" | wc -l > test4/file20`  
 **result:**
 ```shell
 zsh: no such file or directory: fvdile1

@@ -153,7 +153,7 @@ flowchart LR
     NEXT & ERR --> END
 ```
 
-**Check access **
+**Check access**
 ```mermaid
 flowchart LR
     START((START))

@@ -52,6 +52,7 @@ DPRINTF_SRCS	:=	ft_dprintf_arg.c\
 MEM_SRCS	:=	ft_free_ptrptr_str.c\
 
 MSG_SRCS	:=	ft_error.c\
+			ft_shell_msg.c\
 			ft_warning.c
 
 PUT_SRCS	:=	ft_putchar_fd.c\

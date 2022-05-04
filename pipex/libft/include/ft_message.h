@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:41:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/04/16 13:22:44 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/04 12:17:34 by abarrier         ###   ########.fr       */
 /*   Updated: 2022/04/11 07:58:28 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -14,6 +14,8 @@
 #ifndef FT_MESSAGE_H
 # define FT_MESSAGE_H
 
+# include <errno.h>
+# include <string.h>
 # include "ft_color.h"
 
 /***GLOBAL***/
@@ -43,6 +45,16 @@
  * @return int | >= 1: Total of printed characters
  */
 int	ft_error(char *f, char *data, char c, char *msg);
+
+/**
+ * @brief Print error message on stderr in RED color according to 
+ * the following structure
+ * 	Type: Error message: Object
+ *
+ * @param char *s: Type of the message | char *obj: Data of the error
+ * @return int | >= 1: Total of printed characters
+ */
+int	ft_shell_msg(char *type, char *data);
 
 /**
  * @brief Print warning message on stdout in YELLOW color according to

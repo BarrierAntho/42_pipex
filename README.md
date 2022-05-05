@@ -178,6 +178,11 @@ flowchart LR
     IsError --> |yes| ERR
 ```
 
+$$
+cmd_n = argc - exec - File_n
+cdm_n = 5 - 1 - 2
+$$
+
 
 ### Commands execution
 [Go to content](#content)  
@@ -271,3 +276,4 @@ zsh: permission denied: test4/file20
 ### Pipe
 - https://github.com/dams333/42-cursus/blob/master/minishell/README.md#pipe
 - http://www.idc-online.com/technical_references/pdfs/information_technology/How_Linux_pipes_work_under_the_hood.pdf
+- http://web.cse.ohio-state.edu/~mamrak.1/CIS762/pipes_lab_notes.html

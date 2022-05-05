@@ -1,4 +1,9 @@
-#Color definition
+# Test definition
+TESTPATH	:=	test
+TESTFILE1	:=	file1
+TESTFILE2	:=	file2
+
+# Color definition
 BASE		:=	\033[
 RD		:=	$(BASE)0;31m
 GN		:=	$(BASE)0;32m
@@ -82,10 +87,67 @@ re:
 			make all
 
 norme:
-			@echo 3norme:
+			@echo norme:
 			norminette
 			@echo $(SEP_P)
 
+ori_0p:
+			make --no-print-directory -i test_echo
+			make --no-print-directory -i test_ls
+
+test_echo:
+			echo ""
+			@echo "$(YE)$(SEP_P)$(NC)"
+			echo "test"
+			@echo "$(YE)$(SEP_P)$(NC)"
+			echo Hello World
+			@echo "$(YE)$(SEP_P)$(NC)"
+			@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
+			echo $(TESTPATH)
+			@$(call f_delete_test_data,$(TESTPATH))
+			@echo "$(YE)$(SEP_P)$(NC)"
+			@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
+			< $(TESTPATH)/$(TESTFILE1) echo
+			@$(call f_delete_test_data,$(TESTPATH))
+			@echo "$(YE)$(SEP_P)$(NC)"
+
+test_ls:
+			ls ""
+			@echo "$(YE)$(SEP_P)$(NC)"
+			ls
+			@echo "$(YE)$(SEP_P)$(NC)"
+			@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
+			ls $(TESTPATH)
+			@$(call f_delete_test_data,$(TESTPATH))
+			@echo "$(YE)$(SEP_P)$(NC)"
+
+define f_create_test_dir
+	@mkdir -p $(1) && echo "$(CY)Creation of test directory \"$(1)\" successed$(NC)"
+endef
+
+define f_delete_test_dir
+	$(RM) $(1) && echo "$(CY)Deletion of test directory \"$(1)\" successed$(NC)"
+endef
+
+define f_create_test_file
+	@touch "$(1)" && echo "$(CY)Creation of test file \"$(1)\" successed$(NC)"
+	@echo "This is the file \"$(1)\"" > $(1)
+endef
+
+define f_delete_test_file
+	$(RM) $(1) && echo "$(CY)Deletion of test file \"$(1)\" successed$(NC)"
+endef
+
+define f_create_test_data
+	$(call f_create_test_dir,$(1))
+	$(call f_create_test_file,$(1)/$(2))
+	$(call f_create_test_file,$(1)/$(3))
+endef
+
+define f_delete_test_data
+	$(call f_delete_test_dir,$(1))
+endef
+
 -include $(DEPS)
 
-.PHONY:			all clean fclean re norme
+.PHONY:			all clean fclean re norme ori_0p

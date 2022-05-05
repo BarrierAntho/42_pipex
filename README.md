@@ -62,8 +62,23 @@ int	main(int argc, char **argv, char **envp)
 - [ ] Commands
 	- [ ] Split the command to get the command and its parameters
 	- [ ] Check access permission with `access(const char *pathname, int mode)` where mode = X\_OK`  
-	- [ ] Check if binary command with `execve(const char *pathname, char *const argv[],char *const envp[])`  
-:warning: _The priority of error in a pipe is : file, command  
+	- [ ] Check if binary command with `execve(const char *pathname, char *const argv\[\],char \*const envp\[\])`
+- [ ] Pipe
+	- [ ] Calcualte total of pipe
+```
+nPipe = nCmd - 1
+nPipe = (argc - argv[0] - argv[1] - argv[last]) - 1
+```
+**Exemple:**
+```
+< file1 "cat" | "wc -c" > file2
+./pipex file1 "cat" "wc -c" file2
+
+nPipe = (5 - 1 - 1 - 1) - 1
+nPipe = 1
+```
+:warning: _The priority of error in a pipe is : file, command_  
+:warning: _The priority of catargument is more important than stdin_
 :bangbang: _Use open "O_DIRECTORY" to know if the object is a directory_  
 :bangbang: _Use open "O_CREAT" to create the output file_  
 
@@ -177,12 +192,6 @@ flowchart LR
     IsError --> |no| END
     IsError --> |yes| ERR
 ```
-
-$$
-cmd_n = argc - exec - File_n
-cdm_n = 5 - 1 - 2
-$$
-
 
 ### Commands execution
 [Go to content](#content)  

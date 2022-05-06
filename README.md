@@ -24,11 +24,11 @@ Bonus :moneybag:: `./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2`
 
 :warning: _The command is in double quote and can contain parameters_
 
-Example:
+> **Example:**
 `./pipex infile "ls -l" "wc -l" outfile` equal to `< infile ls -l | wc -l > outfile`  
 `./pipex infile "grep a1" "wc -w" outfile` equal to `< infile grep a1 | wc -w > outfile`  
 
-**Original:**  
+> **Original:**  
 Mandatory :key:: `< file1 cat | wc -l > file2`  
 Bonus :moneybag:: `< file1 cat | wc -l | head > file2` 
 
@@ -69,7 +69,7 @@ int	main(int argc, char **argv, char **envp)
 nPipe = nCmd - 1
 nPipe = (argc - argv[0] - argv[1] - argv[last]) - 1
 ```
-**Exemple:**
+> **Exemple:**
 ```
 < file1 "cat" | "wc -c" > file2
 ./pipex file1 "cat" "wc -c" file2
@@ -235,7 +235,7 @@ int execve(const char *pathname, char *const argv[], char *const envp[]);
 `argv` : is the pointer of the command following by its argument
 `envp` : is environment passed to the new program
 
-> Exemple:
+> Example:
 ```c
 int	main(int argc, char **argv, char **envp)
 {
@@ -247,7 +247,7 @@ int	main(int argc, char **argv, char **envp)
 ```shell
 ./pipex /usr/bin/ls "-alt"
 ```
-:warning: _argv from execve is `&argv[1]` because of adress shifting then &argv[1] = /usr/bin/ls "-alt"
+:warning: _argv from execve is `&argv[1]` because of adress shifting then &argv[1] = /usr/bin/ls "-alt"_
 
 > Result:
 ```shell
@@ -260,6 +260,31 @@ drwxr-xr-x  2 abarrier 2021_paris  4096 May  4 10:11 include
 drwxr-xr-x 12 abarrier 2021_paris  4096 May  4 10:03 libft
 drwxr-xr-x  5 abarrier 2021_paris  4096 May  4 09:56 ..
 -rw-r--r--  1 abarrier 2021_paris  1592 May  4 09:28 Makefile
+```
+
+### open, dup2 and execve
+**Synopsis:**
+```c
+int ret = open(argv[1], O_RDONLY);
+if (ret == -1)
+	return (ft_error("main", "open", 0, "ERROR"));
+else
+	ft_dprintf(1, "ret = %d\n", ret);
+dup2(ret, 0);
+execve(argv[2], &argv[2], NULL);
+```
+
+> Exammple:
+```shell
+./pipex test/file1 /usr/bin/cat
+```
+> **Original:**
+```shell
+< test/file1 cat
+```
+> **Result:**
+```shell
+Hello World
 ```
 
 ## Use cases

@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/05 09:04:16 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/06 09:52:16 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,15 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include "ft_libft.h"
 
-int	ppx_parse(int argc, char **argv);
+# include "ft_libft.h"
+# include "ppx_message.h"
+
+// CONST USED TO DERTERMINE N PIPE
+// nPipe = nCmd - 1
+// nPipe = (argc - argv[0] - argv[1] - argv[last]) - 1
+// < file1 "cat" | "wc -c" > file2
+// ./pipex file1 "cat" "wc -c" file2
+# define NOT_COMMAND 3
 
 #endif

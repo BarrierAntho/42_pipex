@@ -38,24 +38,19 @@ OPATH		:=	obj
 
 # SOURCES FOLDER
 SRCSPATH	:=	srcs
-PARSEPATH	:=	parse
 
 RM		:=	rm -rf
 
 PPX_SRCS	:=	pipex.c
 
-PARSE_SRCS	:=	ppx_parse.c
-
-SRCS		:=	$(PPX_SRCS)\
-			$(PARSE_SRCS)
+SRCS		:=	$(PPX_SRCS)
 
 OBJS		=	$(addprefix $(OPATH)/, $(SRCS:.c=.o))
 
 DEPS		=	$(OBJS:.o=.d)
 
 vpath %.h $(IPATH)
-vpath %.c $(SRCSPATH)\
-	$(SRCSPATH)/$(PARSEPATH)
+vpath %.c $(SRCSPATH)
 vpath %.o $(OPATH)
 
 all:			$(NAME)
@@ -77,7 +72,7 @@ clean:
 			$(RM) $(OPATH)
 
 fclean:
-			make flean -C $(FTPATH)
+			make fclean -C $(FTPATH)
 			make clean
 			$(RM) $(NAME)
 
@@ -94,6 +89,8 @@ norme:
 ori_0p:
 			make --no-print-directory -i test_echo
 			make --no-print-directory -i test_ls
+
+
 
 test_echo:
 			echo ""

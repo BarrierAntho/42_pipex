@@ -49,6 +49,9 @@ DPRINTF_SRCS	:=	ft_dprintf_arg.c\
 			ft_dprintf_putu.c\
 			ft_dprintf_putx.c
 
+GNL_SRCS	:=	get_next_line.c\
+			get_next_line_utils.c
+
 MEM_SRCS	:=	ft_free_ptrptr_str.c\
 
 MSG_SRCS	:=	ft_error.c\
@@ -79,6 +82,7 @@ STR_SRCS	:=	ft_index.c\
 SRCS		:=	$(CHAR_SRCS)\
 			$(CONV_SRCS)\
 			$(DPRINTF_SRCS)\
+			$(GNL_SRCS)\
 			$(MEM_SRCS)\
 			$(MSG_SRCS)\
 			$(PUT_SRCS)\
@@ -89,13 +93,14 @@ OBJS		=	$(addprefix $(OPATH)/, $(SRCS:.c=.o))
 DEPS		=	$(OBJS:.o=.d)
 
 vpath %.h $(IPATH)
-vpath %.c $(DPRINTFPATH)\
-	$(CHARPATH)\
-	$(STRPATH)\
-	$(PUTPATH)\
-	$(MSGPATH)\
+vpath %.c $(CHARPATH)\
 	$(CONVPATH)\
-	$(MEMPATH)
+	$(DPRINTFPATH)\
+	$(GNLPATH)\
+	$(MEMPATH)\
+	$(MSGPATH)\
+	$(PUTPATH)\
+	$(STRPATH)
 vpath %.o $(OPATH)
 
 all:			$(NAME)

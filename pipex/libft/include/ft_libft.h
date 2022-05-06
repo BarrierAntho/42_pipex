@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:00:42 by abarrier          #+#    #+#             */
-/*   Updated: 2022/04/11 12:27:39 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/06 10:20:34 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@
 # include "ft_message.h"
 # include "ft_put.h"
 # include "ft_string.h"
+# include "get_next_line.h"
 
 #endif

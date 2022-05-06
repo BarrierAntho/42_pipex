@@ -197,6 +197,8 @@ flowchart LR
 [Go to content](#content)  
 :warning: _The command execve replace the actual process_
 
+:warning: _Do "execve" one time to test relative path and i return -1, do a second time "execve" with absolue path by suing envp_
+
 ## File commands
 [Go to content](#content)  
 - pwd

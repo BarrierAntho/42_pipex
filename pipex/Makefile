@@ -41,7 +41,8 @@ SRCSPATH	:=	srcs
 
 RM		:=	rm -rf
 
-PPX_SRCS	:=	pipex.c
+PPX_SRCS	:=	pipex.c\
+				ppx_pipex.c
 
 SRCS		:=	$(PPX_SRCS)
 

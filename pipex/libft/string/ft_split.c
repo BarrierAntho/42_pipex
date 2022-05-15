@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 11:07:31 by abarrier          #+#    #+#             */
-/*   Updated: 2022/04/07 21:45:10 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/14 11:46:48 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	**ft_sub_split(char **sl, char const *s, int c)
 		else
 			j++;
 	}
-	sl[i] = 0;
+	sl[i] = NULL;
 	return (sl);
 }
 

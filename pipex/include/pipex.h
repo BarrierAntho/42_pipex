@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/06 09:52:16 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/14 14:24:38 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,10 @@
 // < file1 "cat" | "wc -c" > file2
 // ./pipex file1 "cat" "wc -c" file2
 # define NOT_COMMAND 3
+# define ENV_SEP '='
+# define ENV_FIELD_SEP ':'
+# define DIR_SEP '/'
+
+int	ppx_pipex(int argc, char **argv, int pfd[], int *npipex);
 
 #endif

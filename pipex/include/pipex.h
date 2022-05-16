@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/14 14:24:38 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/16 18:56:20 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define ENV_FIELD_SEP ':'
 # define DIR_SEP '/'
 
-int	ppx_pipex(int argc, char **argv, int pfd[], int *npipex);
+int	ppx_pipex(char **envp, int *npipex);
+char	*ppx_check_path(char *path, char *cmd);
 
 #endif

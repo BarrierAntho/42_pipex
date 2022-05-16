@@ -29,8 +29,8 @@ NAME		:=	pipex
 CC		:=	cc
 CFLAGS		:=	-MMD -Wall -Wextra -Werror
 #CFLAGSADD	:=	-Wconversion -g3 -fsanitize=address
-#CFLAGSADD	:=	-g3 -fsanitize=address
-CFLAGSADD	:=
+CFLAGSADD	:=	-g3 -fsanitize=address
+#CFLAGSADD	:=
 VALGRIND	:=	valgrind
 
 IPATH		:=	include
@@ -42,7 +42,8 @@ SRCSPATH	:=	srcs
 RM		:=	rm -rf
 
 PPX_SRCS	:=	pipex.c\
-				ppx_pipex.c
+			ppx_pipex.c\
+			ppx_check_path.c	
 
 SRCS		:=	$(PPX_SRCS)
 
@@ -91,8 +92,12 @@ ori_0p:
 			make --no-print-directory -i test_echo
 			make --no-print-directory -i test_ls
 
-
-
+mktest:
+			@echo "$(YE)$(SEP_P)$(NC)"
+			@$(call f_delete_test_data,$(TESTPATH))
+			@echo "$(YE)$(SEP_P)$(NC)"
+			@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
+	
 test_echo:
 			echo ""
 			@echo "$(YE)$(SEP_P)$(NC)"
@@ -118,6 +123,9 @@ test_ls:
 			ls $(TESTPATH)
 			@$(call f_delete_test_data,$(TESTPATH))
 			@echo "$(YE)$(SEP_P)$(NC)"
+
+test_my:
+			./$(NAME) $(TESTPATH)/$(TESTFILE1) cat ls $(TESTPATH)/$(TESTFILE2)
 
 define f_create_test_dir
 	@mkdir -p $(1) && echo "$(CY)Creation of test directory \"$(1)\" successed$(NC)"
@@ -148,4 +156,4 @@ endef
 
 -include $(DEPS)
 
-.PHONY:			all clean fclean re norme ori_0p
+.PHONY:			all clean fclean re norme ori_0p mktest test_echo test_ls

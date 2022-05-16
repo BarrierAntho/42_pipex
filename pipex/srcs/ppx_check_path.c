@@ -6,7 +6,7 @@
 /*   By: antho <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:15:59 by antho             #+#    #+#             */
-/*   Updated: 2022/05/14 15:03:31 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/16 14:29:53 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,22 @@
 
 char	*ppx_check_path(char *path, char *cmd)
 {
+	char	*tmp;
 	char	*fullpath;
 
-	fullpath = (char *)malloc(sizeof(char * (ft_strlen(path)
-					+ ft_strlen(DIR_SEP) + ft_strlen(cmd) + 1)));
+	tmp = ft_strjoin(path, "/");
+	if (!tmp)
+	{
+		ft_error("check_path", "tmp", 0, ERR_MALLOC);
+		return (NULL);
+	}
+	fullpath = ft_strjoin(tmp, cmd);
 	if (!fullpath)
 	{
 		ft_error("check_path", "fullpath", 0, ERR_MALLOC);
 		return (NULL);
 	}
-
+	free(tmp);
+	tmp = NULL;
 	return (fullpath);
 }

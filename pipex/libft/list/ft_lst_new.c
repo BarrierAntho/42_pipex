@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memory.h                                        :+:      :+:    :+:   */
+/*   ft_lst_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 08:12:00 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 14:13:51 by abarrier         ###   ########.fr       */
+/*   Created: 2022/05/16 08:47:50 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/16 10:02:29 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MEMORY_H
-# define FT_MEMORY_H
+#include "ft_list.h"
 
-# include <stdlib.h>
+t_list	*ft_lst_new(void *content)
+{
+	t_list	*new;
 
-char	*ft_free_ptrptr_str(char **s);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-
-#endif
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+	{
+		ft_error("lst_new", "new", 0, ERR_MALLOC);
+		return (NULL);
+	}
+	if (!content)
+		new->content = NULL;
+	else
+		new->content = content;
+	new->prev = NULL;
+	new->next = NULL;
+	return (new);
+}

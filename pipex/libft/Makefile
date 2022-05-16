@@ -16,6 +16,7 @@ CHARPATH	:=	chartype
 CONVPATH	:=	convert
 DPRINTFPATH	:=	ft_dprintf
 GNLPATH		:=	gnl
+LISTPATH	:=	list
 MEMPATH		:=	memory
 MSGPATH		:=	message
 STRPATH		:=	string
@@ -52,7 +53,17 @@ DPRINTF_SRCS	:=	ft_dprintf_arg.c\
 GNL_SRCS	:=	get_next_line.c\
 			get_next_line_utils.c
 
+LIST_SRCS	:=	ft_lst_append.c\
+			ft_lst_clear.c\
+			ft_lst_delbyobj.c\
+			ft_lst_last.c\
+			ft_lst_new.c\
+			ft_lst_size.c
+
 MEM_SRCS	:=	ft_free_ptrptr_str.c\
+			ft_memcmp.c\
+			ft_memcpy.c\
+			ft_memmove.c
 
 MSG_SRCS	:=	ft_error.c\
 			ft_shell_msg.c\
@@ -70,19 +81,24 @@ STR_SRCS	:=	ft_index.c\
 			ft_strchrset_exclude.c\
 			ft_strcpy.c\
 			ft_strdup.c\
+			ft_strjoin.c\
+			ft_strlcat.c\
 			ft_strlcpy.c\
 			ft_strlen.c\
 			ft_strlen_addr.c\
 			ft_strnchar.c\
+			ft_strncmp.c\
 			ft_strncpy.c\
 			ft_strrchr.c\
 			ft_strrchrset_exclude.c\
+			ft_strstr.c\
 			ft_strtrim.c
 
 SRCS		:=	$(CHAR_SRCS)\
 			$(CONV_SRCS)\
 			$(DPRINTF_SRCS)\
 			$(GNL_SRCS)\
+			$(LIST_SRCS)\
 			$(MEM_SRCS)\
 			$(MSG_SRCS)\
 			$(PUT_SRCS)\
@@ -97,6 +113,7 @@ vpath %.c $(CHARPATH)\
 	$(CONVPATH)\
 	$(DPRINTFPATH)\
 	$(GNLPATH)\
+	$(LISTPATH)\
 	$(MEMPATH)\
 	$(MSGPATH)\
 	$(PUTPATH)\
@@ -142,6 +159,8 @@ norme:
 			norminette $(CONVPATH)
 			@echo $(SEP_P)
 			norminette $(MEMPATH)
+			@echo $(SEP_P)
+			norminette
 
 -include $(DEPS)
 

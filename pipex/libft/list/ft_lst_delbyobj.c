@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memory.h                                        :+:      :+:    :+:   */
+/*   ft_lst_delbyobj.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 08:12:00 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 14:13:51 by abarrier         ###   ########.fr       */
+/*   Created: 2022/05/16 09:31:55 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/16 09:56:35 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MEMORY_H
-# define FT_MEMORY_H
+#include "ft_list.h"
 
-# include <stdlib.h>
+t_list	*ft_lst_delbyobj(t_list *obj)
+{
+	t_list	*prev;
+	t_list	*next;
 
-char	*ft_free_ptrptr_str(char **s);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-
-#endif
+	if (!obj)
+	{
+		ft_error("lst_delbyobj", "obj", 0, ERR_NOOBJ);
+		return (NULL);
+	}
+	prev = obj->prev;
+	next = obj->next;
+	if (prev)
+	{
+		prev->next = next;
+		if (next)
+			next->prev = prev;
+	}
+	else if (next)
+		next->prev = NULL;
+	free(obj);
+	obj = NULL;
+	return (next);
+}

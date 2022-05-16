@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memory.h                                        :+:      :+:    :+:   */
+/*   ft_lst_last.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 08:12:00 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 14:13:51 by abarrier         ###   ########.fr       */
+/*   Created: 2022/05/16 08:57:26 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/16 09:12:27 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MEMORY_H
-# define FT_MEMORY_H
+#include "ft_list.h"
 
-# include <stdlib.h>
+t_list	*ft_lst_last(t_list *lst)
+{
+	t_list	*obj;
 
-char	*ft_free_ptrptr_str(char **s);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-
-#endif
+	if (!lst)
+		return (NULL);
+	obj = lst;
+	while (obj->next)
+		obj = obj->next;
+	return (obj);
+}

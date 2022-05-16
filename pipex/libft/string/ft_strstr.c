@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memory.h                                        :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 08:12:00 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 14:13:51 by abarrier         ###   ########.fr       */
+/*   Created: 2022/05/16 14:32:52 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/16 17:33:18 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MEMORY_H
-# define FT_MEMORY_H
+#include "ft_string.h"
 
-# include <stdlib.h>
+char	*ft_strstr(const char *s, const char *needle)
+{
+	int	i;
 
-char	*ft_free_ptrptr_str(char **s);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-
-#endif
+	if (!needle)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == needle[0])
+		{
+			if (ft_strncmp(&s[i], needle, ft_strlen(needle)) == 0)
+				return ((char *)&s[i]);
+		}
+		i++;
+	}
+	return (NULL);
+}

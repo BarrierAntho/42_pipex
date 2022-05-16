@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:05:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/04/07 20:54:01 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/16 17:32:57 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,24 @@ char	*ft_strcpy(char *dst, const char *src);
 char	*ft_strdup(const char *s);
 
 /**
+ * @brief Return a new string resulting of concatenation of s1 and s2
+ *
+ * @param const char *s1: String to be concatenated | char *s2: String to be
+ * concatenated
+ * @return char* | 0: is not existing, >= 0: pointer of the new string
+ */
+char	*ft_strjoin(const char *s1, const char *s2);
+
+/**
+ * @brief Return a pointer of destination string.
+ *
+ * @param char *dst: String to be modified | const char *src: String to be copied
+ * size_t: Length of copy
+ * @return char* | 0: is not existing, >= 0: pointer of the destination string
+ */
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+
+/**
  * @brief Return a pointer of destination string.
  *
  * @param char *dst: String to be modified | const char *src: String to be copied
@@ -113,6 +131,15 @@ size_t	ft_strlen_addr(char *start, char *end);
 int		ft_strnchar(const char *s, int c);
 
 /**
+ * @brief Return integer indicating the result of the comparison
+ *
+ * @param const char *s1: String to be read | const char *s2: String to be
+ * compared | size_t n: Total of character to be compared
+ * @return int | 0: occurence, != 0: no occurence
+ */
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
+/**
  * @brief Return a pointer of destination string.
  *
  * @param char *dst: String to be modified | const char *src: String to be copied
@@ -141,6 +168,16 @@ char	*ft_strrchr(const char *s, int c);
 char	*ft_strrchrset_exclude(const char *s, const char *chrset);
 
 /**
+ * @brief Return a pointer to the first char of the needle in the
+ * string s.
+ *
+ * @param const char *s: String to be read | const char *needle: String to
+ * be searched
+ * @return char* | 0: is not existing, >= 0: pointer in the string
+ */
+char	*ft_strstr(const char *s, const char *needle);
+
+/**
  * @brief Return a pointer of a new string without leading and trailing
  * space char (isspace).
  *
@@ -148,5 +185,4 @@ char	*ft_strrchrset_exclude(const char *s, const char *chrset);
  * @return char* | 0: is not existing, >= 0: pointer of the new string
  */
 char	*ft_strtrim(const char *s);
-
 #endif

@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memory.h                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 08:12:00 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 14:13:51 by abarrier         ###   ########.fr       */
+/*   Created: 2021/11/24 15:31:52 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/16 14:15:41 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MEMORY_H
-# define FT_MEMORY_H
+#include "ft_memory.h"
 
-# include <stdlib.h>
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	unsigned char	*ucdest;
+	unsigned char	*ucsrc;
 
-char	*ft_free_ptrptr_str(char **s);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-
-#endif
+	ucdest = (unsigned char *)dest;
+	ucsrc = (unsigned char *)src;
+	if (!dest && !src)
+		return (NULL);
+	if (ucdest >= ucsrc)
+	{
+		while (n != '\0')
+		{
+			n--;
+			ucdest[n] = ucsrc[n];
+		}
+	}
+	else
+		ft_memcpy(dest, src, n);
+	return (ucdest);
+}

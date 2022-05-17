@@ -65,6 +65,10 @@ int	main(int argc, char **argv, char **envp)
 	- [ ] Check if binary command with `execve(const char *pathname, char *const argv\[\],char \*const envp\[\])`
 - [ ] Pipe
 	- [ ] Calcualte total of pipe
+- [ ] Free
+	- [ ] Free in the main program
+	- [ ] Free in child process only if execve does not work
+:bangbang: **_The command execve will destroy/free every allocated object. Then in the child, if execve works, not need to free_**
 ```
 nPipe = nCmd - 1
 nPipe = (argc - argv[0] - argv[1] - argv[last]) - 1
@@ -78,7 +82,7 @@ nPipe = (5 - 1 - 1 - 1) - 1
 nPipe = 1
 ```
 :warning: _The priority of error in a pipe is : file, command_  
-:warning: _The priority of catargument is more important than stdin_
+:warning: _The priority of cat argument is more important than stdin_
 :bangbang: _Use open "O_DIRECTORY" to know if the object is a directory_  
 :bangbang: _Use open "O_CREAT" to create the output file_  
 

@@ -58,7 +58,8 @@ LIST_SRCS	:=	ft_lst_append.c\
 			ft_lst_delbyobj.c\
 			ft_lst_last.c\
 			ft_lst_new.c\
-			ft_lst_size.c
+			ft_lst_size.c\
+			ft_lst_show.c
 
 MEM_SRCS	:=	ft_free_ptrptr_str.c\
 			ft_memcmp.c\

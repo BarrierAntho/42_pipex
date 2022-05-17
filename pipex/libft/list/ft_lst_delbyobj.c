@@ -6,13 +6,13 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:31:55 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 09:56:35 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/17 08:23:41 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_list.h"
 
-t_list	*ft_lst_delbyobj(t_list *obj)
+t_list	*ft_lst_delbyobj(t_list *obj, void (*f)(void *))
 {
 	t_list	*prev;
 	t_list	*next;
@@ -32,6 +32,8 @@ t_list	*ft_lst_delbyobj(t_list *obj)
 	}
 	else if (next)
 		next->prev = NULL;
+	if (f)
+		(f)(obj->content);
 	free(obj);
 	obj = NULL;
 	return (next);

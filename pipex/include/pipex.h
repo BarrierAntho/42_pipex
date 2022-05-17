@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 18:56:20 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:13:23 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,25 @@
 # define NOT_COMMAND 3
 # define ENV_SEP '='
 # define ENV_FIELD_SEP ':'
-# define DIR_SEP '/'
+# define DIR_SEP "/"
+# define ARG_SEP ' '
 
-int	ppx_pipex(char **envp, int *npipex);
-char	*ppx_check_path(char *path, char *cmd);
+typedef struct s_cmd
+{
+	char			*arg;
+	char			**fullcmd;
+	char			*fullpath;
+}			t_cmd;
+
+/***LIST**/
+t_list	**ppx_list_init(int argc, char **argv, char **envp);
+
+/***COMMAND***/
+void	ppx_cmd_free(void *cmd);
+char	*ppx_cmd_getvalidpath(char *cmd, char **envp);
+t_cmd	*ppx_cmd_init(char *arg, char **envp);
+int		ppx_cmd_init_prop(t_cmd *cmd, char *arg, char **envp);
+char	*ppx_cmd_setpath(char *cmd, char *env);
+void	ppx_cmd_show(void *cmd);
 
 #endif

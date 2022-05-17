@@ -29,30 +29,44 @@ NAME		:=	pipex
 CC		:=	cc
 CFLAGS		:=	-MMD -Wall -Wextra -Werror
 #CFLAGSADD	:=	-Wconversion -g3 -fsanitize=address
-CFLAGSADD	:=	-g3 -fsanitize=address
-#CFLAGSADD	:=
-VALGRIND	:=	valgrind
+#CFLAGSADD	:=	-g3 -fsanitize=address
+CFLAGSADD	:=
+VALGRIND	:=	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
+#VALGRIND	:=	
 
 IPATH		:=	include
 OPATH		:=	obj
 
 # SOURCES FOLDER
 SRCSPATH	:=	srcs
+CMDPATH		:=	cmd
+LISTPATH	:=	list
 
 RM		:=	rm -rf
 
-PPX_SRCS	:=	pipex.c\
-			ppx_pipex.c\
-			ppx_check_path.c	
+PPX_SRCS	:=	pipex.c
 
-SRCS		:=	$(PPX_SRCS)
+CMD_SRCS	:=	ppx_cmd_free.c\
+			ppx_cmd_getvalidpath.c\
+			ppx_cmd_init.c\
+			ppx_cmd_init_prop.c\
+			ppx_cmd_setpath.c\
+			ppx_cmd_show.c
+
+LIST_SRCS	:=	ppx_list_init.c
+
+SRCS		:=	$(PPX_SRCS)\
+			$(CMD_SRCS)\
+			$(LIST_SRCS)
 
 OBJS		=	$(addprefix $(OPATH)/, $(SRCS:.c=.o))
 
 DEPS		=	$(OBJS:.o=.d)
 
 vpath %.h $(IPATH)
-vpath %.c $(SRCSPATH)
+vpath %.c $(SRCSPATH)\
+	$(SRCSPATH)/$(CMDPATH)\
+	$(SRCSPATH)/$(LISTPATH)\
 vpath %.o $(OPATH)
 
 all:			$(NAME)
@@ -124,8 +138,12 @@ test_ls:
 			@$(call f_delete_test_data,$(TESTPATH))
 			@echo "$(YE)$(SEP_P)$(NC)"
 
-test_my:
-			./$(NAME) $(TESTPATH)/$(TESTFILE1) cat ls $(TESTPATH)/$(TESTFILE2)
+test:
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) cat ls $(TESTPATH)/$(TESTFILE2)
+#			< test cat | ls > test/file2
+#			$(VALGRIND) ./$(NAME) $(TESTPATH) cat ls $(TESTPATH)/$(TESTFILE2)
+#			< test ls | ls > test/file2
+#			$(VALGRIND) ./$(NAME) $(TESTPATH) ls ls $(TESTPATH)/$(TESTFILE2)
 
 define f_create_test_dir
 	@mkdir -p $(1) && echo "$(CY)Creation of test directory \"$(1)\" successed$(NC)"
@@ -156,4 +174,4 @@ endef
 
 -include $(DEPS)
 
-.PHONY:			all clean fclean re norme ori_0p mktest test_echo test_ls
+.PHONY:			all clean fclean re norme ori_0p mktest test_echo test_ls test

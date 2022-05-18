@@ -31,8 +31,8 @@ CFLAGS		:=	-MMD -Wall -Wextra -Werror
 #CFLAGSADD	:=	-Wconversion -g3 -fsanitize=address
 #CFLAGSADD	:=	-g3 -fsanitize=address
 CFLAGSADD	:=
-VALGRIND	:=	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
-#VALGRIND	:=	
+#VALGRIND	:=	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
+VALGRIND	:=	
 
 IPATH		:=	include
 OPATH		:=	obj
@@ -50,6 +50,8 @@ CMD_SRCS	:=	ppx_cmd_free.c\
 			ppx_cmd_getvalidpath.c\
 			ppx_cmd_init.c\
 			ppx_cmd_init_prop.c\
+			ppx_cmd_loop_envline.c\
+			ppx_cmd_loop_envp.c\
 			ppx_cmd_setpath.c\
 			ppx_cmd_show.c
 
@@ -139,7 +141,7 @@ test_ls:
 			@echo "$(YE)$(SEP_P)$(NC)"
 
 test:
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) cat ls $(TESTPATH)/$(TESTFILE2)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2)
 #			< test cat | ls > test/file2
 #			$(VALGRIND) ./$(NAME) $(TESTPATH) cat ls $(TESTPATH)/$(TESTFILE2)
 #			< test ls | ls > test/file2

@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/17 19:13:23 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 08:33:53 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	ppx_cmd_free(void *cmd);
 char	*ppx_cmd_getvalidpath(char *cmd, char **envp);
 t_cmd	*ppx_cmd_init(char *arg, char **envp);
 int		ppx_cmd_init_prop(t_cmd *cmd, char *arg, char **envp);
+char	*ppx_cmd_loop_envp(char *cmd, char **envp);
+char	*ppx_cmd_loop_envline(char *cmd, char **envline);
 char	*ppx_cmd_setpath(char *cmd, char *env);
 void	ppx_cmd_show(void *cmd);
 

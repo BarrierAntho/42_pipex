@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:59:05 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 11:49:55 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:14:52 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ppx_cmd_setpath(char *cmd, char *env)
 	len_env_sep = ft_strlen(DIR_SEP);
 	len_cmd = ft_strlen(cmd);
 	path = (char *)malloc(sizeof(char) * (len_env + len_env_sep
-			       	+ len_cmd + 1));
+				+ len_cmd + 1));
 	if (!path)
 	{
 		ft_error("cdm_setpath", "path", 0, ERR_MALLOC);
@@ -38,6 +38,5 @@ char	*ppx_cmd_setpath(char *cmd, char *env)
 	ft_memmove(path + len_env, DIR_SEP, len_env_sep);
 	ft_memmove(path + len_env + len_env_sep, cmd, len_cmd);
 	path[len_env + len_env_sep + len_cmd] = '\0';
-			ft_dprintf(1, "path: %s\n", path);
 	return (path);
 }

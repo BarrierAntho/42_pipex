@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:31:40 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 11:57:54 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:07:30 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,25 @@
 //{
 //	execve(*test, test, NULL);
 //}
-int	main(int argc, char **argv, char **envp)
-{
-	int		infile;
-	int		outfile;
-	t_list	**list;
-		(void)envp;
-
-	if (argc != 5)
-		return (ft_error("main", "argc", 0, ERR_ARG));
-	infile = open(argv[1], O_RDONLY);
-	outfile = open(argv[argc - 1], O_WRONLY | O_RDWR | O_TRUNC
-			| O_CREAT, 0644);
-	list = ppx_list_init(argc, argv, envp);
-	if (!list)
-	{
-		close(infile);
-		close(outfile);
-		return (ft_error("main", "list", 0, ERR_MALLOC));
-	}
 //	t_list *obj = *list;
 //	t_cmd *cmd = (t_cmd *)obj->content;
 //	ppx_cmd_show(cmd);
 //	execve(cmd->fullcmd[0], cmd->fullcmd, NULL);
-	close(infile);
-	close(outfile);
+int	main(int argc, char **argv, char **envp)
+{
+	t_list	**list;
+
+	if (argc != 5)
+		return (ft_error("main", "argc", 0, ERR_ARG));
+	list = ft_lst_init();
+	if (!list)
+		return (1);
+	if (ppx_lst_set(argc, argv, envp, list))
+	{
+		ft_lst_free(list, &ppx_cmd_free);
+		return (2);
+	}
+	ppx_pipex_run(argc, argv, list);
 	ft_lst_show(list, &ppx_cmd_show);
 	ft_lst_free(list, &ppx_cmd_free);
 	return (0);

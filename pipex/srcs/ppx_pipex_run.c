@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ppx_cmd_init.c                                     :+:      :+:    :+:   */
+/*   ppx_pipex_run.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 14:07:42 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 13:15:20 by abarrier         ###   ########.fr       */
+/*   Created: 2022/05/18 12:27:45 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/18 13:17:55 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_cmd	*ppx_cmd_init(char *arg, char **envp)
+void	ppx_pipex_run(int argc, char **argv, t_list **list)
 {
-	t_cmd	*cmd;
+	int		infile;
+	int		outfile;
 
-	cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!cmd)
-	{
-		ft_error("cmd_init", "cmd", 0, ERR_MALLOC);
-		return (NULL);
-	}
-	cmd->arg = NULL;
-	cmd->fullcmd = NULL;
-	cmd->fullpath = NULL;
-	if (ppx_cmd_init_prop(cmd, arg, envp))
-	{
-		free(cmd);
-		cmd = NULL;
-	}
-	return (cmd);
+	infile = open(argv[1], O_RDONLY);
+	outfile = open(argv[argc - 1], O_WRONLY | O_RDWR | O_TRUNC
+			| O_CREAT, 0644);
+	if (infile > 0)
+		close(infile);
+	if (outfile > 0)
+		close(outfile);
+	(void)list;
 }

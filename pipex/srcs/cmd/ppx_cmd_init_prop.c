@@ -6,12 +6,14 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:08:21 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 09:13:54 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:13:25 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+//							(void)envp;
+//							cmd->fullpath = NULL;
 int	ppx_cmd_init_prop(t_cmd *cmd, char *arg, char **envp)
 {
 	if (!cmd)
@@ -21,8 +23,6 @@ int	ppx_cmd_init_prop(t_cmd *cmd, char *arg, char **envp)
 	if (!cmd->fullcmd)
 		return (ft_error("cmd_init_prop", "fullcmd", 0, ERR_MALLOC));
 	cmd->fullpath = ppx_cmd_getvalidpath(cmd->fullcmd[0], envp);
-//							(void)envp;
-//							cmd->fullpath = NULL;
 	if (!cmd->fullpath)
 	{
 		free(ft_free_ptrptr_str(cmd->fullcmd));

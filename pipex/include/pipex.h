@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 11:10:48 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:16:20 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_cmd
 }			t_cmd;
 
 /***LIST**/
-t_list	**ppx_list_init(int argc, char **argv, char **envp);
+int		ppx_lst_set(int argc, char **argv, char **envp, t_list **list);
 
 /***COMMAND***/
 void	ppx_cmd_free(void *cmd);
@@ -57,5 +57,8 @@ char	*ppx_cmd_loop_envp(char *cmd, char **envp);
 char	*ppx_cmd_loop_envp_str(char *cmd, char **envp, char *s);
 char	*ppx_cmd_setpath(char *cmd, char *env);
 void	ppx_cmd_show(void *cmd);
+
+/***PIPEX***/
+void	ppx_pipex_run(int argc, char **argv, t_list **list);
 
 #endif

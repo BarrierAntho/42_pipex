@@ -6,23 +6,12 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:31:40 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 13:07:30 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 22:00:46 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-//dup2(infile, STDIN_FILENO);
-//char	*test[] = {"/usr/bin/cat", NULL};
-//pid_t	pid = fork();
-//if (pid == 0)
-//{
-//	execve(*test, test, NULL);
-//}
-//	t_list *obj = *list;
-//	t_cmd *cmd = (t_cmd *)obj->content;
-//	ppx_cmd_show(cmd);
-//	execve(cmd->fullcmd[0], cmd->fullcmd, NULL);
 int	main(int argc, char **argv, char **envp)
 {
 	t_list	**list;
@@ -38,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		return (2);
 	}
 	ppx_pipex_run(argc, argv, list);
-	ft_lst_show(list, &ppx_cmd_show);
+	//ft_lst_show(list, &ppx_cmd_show);
 	ft_lst_free(list, &ppx_cmd_free);
 	return (0);
 }

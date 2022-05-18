@@ -32,8 +32,8 @@ CFLAGS		:=	-MMD -Wall -Wextra -Werror
 #CFLAGSADD	:=	-Wconversion -g3 -fsanitize=address
 #CFLAGSADD	:=	-g3 -fsanitize=address
 CFLAGSADD	:=
-VALGRIND	:=	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
-#VALGRIND	:=	
+#VALGRIND	:=	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
+VALGRIND	:=	
 
 IPATH		:=	include
 OPATH		:=	obj
@@ -145,14 +145,18 @@ test_ls:
 
 test:
 			@$(call f_delete_test_file,$(RESFILE))
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "prout" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "toto" "tata" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "prout" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "toto" "tata" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
 #			< test cat | ls > test/file2
 #			$(VALGRIND) ./$(NAME) $(TESTPATH) cat ls $(TESTPATH)/$(TESTFILE2)
 #			< test ls | ls > test/file2

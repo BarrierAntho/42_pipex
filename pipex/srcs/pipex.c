@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:31:40 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/17 17:28:42 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 09:07:09 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ int	main(int argc, char **argv, char **envp)
 		close(outfile);
 		return (ft_error("main", "list", 0, ERR_MALLOC));
 	}
+//	t_list *obj = *list;
+//	t_cmd *cmd = (t_cmd *)obj->content;
+//	ppx_cmd_show(cmd);
+//	execve(cmd->fullcmd[0], cmd->fullcmd, NULL);
 	close(infile);
 	close(outfile);
 	ft_lst_show(list, &ppx_cmd_show);
-	ft_lst_clear(list, &ppx_cmd_free);
-	free(list);
+	ft_lst_free(list, &ppx_cmd_free);
 	return (0);
 }

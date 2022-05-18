@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 08:45:30 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 08:00:40 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:51:58 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ t_list	*ft_lst_delbyobj(t_list *obj, void (*f)(void *));
  * @return N/A
  */
 void	ft_lst_free(t_list **lst, void (*f)(void *));
+
+/**
+ * @brief Init a list and set to NULL the *list
+ *
+ * @param N/A
+ * @return t_list * | NULL: error or no next obj, != 0: Next obj address
+ */
+t_list	**ft_lst_init(void);
 
 /**
  * @brief Return the address of the last object address from the input obj

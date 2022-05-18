@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:41:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 10:01:17 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:15:37 by abarrier         ###   ########.fr       */
 /*   Updated: 2022/04/11 07:58:28 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -25,10 +25,13 @@
 # define ERR_FILEOPEN "File is missing or not readable"
 # define ERR_MALLOC "Malloc issue"
 # define ERR_NOOBJ "No object address"
-# define ERR_NOLIST "No list address"
 
 /***FILE DESCRIPTOR***/
 # define ERR_FD "File descriptor not defined"
+
+/***LIST***/
+# define ERR_NOLIST "No list address"
+# define ERR_LST_APPEND "Error on append list"
 
 /**STRING***/
 # define ERR_MAXLEN_INT "Length string is more than MAX_LEN_INT"

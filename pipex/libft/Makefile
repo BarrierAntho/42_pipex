@@ -57,6 +57,7 @@ LIST_SRCS	:=	ft_lst_append.c\
 			ft_lst_clear.c\
 			ft_lst_delbyobj.c\
 			ft_lst_free.c\
+			ft_lst_init.c\
 			ft_lst_last.c\
 			ft_lst_new.c\
 			ft_lst_size.c\

@@ -1,7 +1,8 @@
-# Test definition
+# Test definitiona
 TESTPATH	:=	test
 TESTFILE1	:=	file1
 TESTFILE2	:=	file2
+RESFILE		:=	res.txt
 
 # Color definition
 BASE		:=	\033[
@@ -44,7 +45,8 @@ LISTPATH	:=	list
 
 RM		:=	rm -rf
 
-PPX_SRCS	:=	pipex.c
+PPX_SRCS	:=	pipex.c\
+			ppx_pipex_run.c
 
 CMD_SRCS	:=	ppx_cmd_free.c\
 			ppx_cmd_getvalidpath.c\
@@ -56,7 +58,7 @@ CMD_SRCS	:=	ppx_cmd_free.c\
 			ppx_cmd_setpath.c\
 			ppx_cmd_show.c
 
-LIST_SRCS	:=	ppx_list_init.c
+LIST_SRCS	:=	ppx_lst_set.c
 
 SRCS		:=	$(PPX_SRCS)\
 			$(CMD_SRCS)\
@@ -142,13 +144,15 @@ test_ls:
 			@echo "$(YE)$(SEP_P)$(NC)"
 
 test:
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2)
-			@echo "$(YE)$(SEP_P)$(NC)"
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2)
-			@echo "$(YE)$(SEP_P)$(NC)"
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "prout" $(TESTPATH)/$(TESTFILE2)
-			@echo "$(YE)$(SEP_P)$(NC)"
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "toto" "tata" $(TESTPATH)/$(TESTFILE2)
+			@$(call f_delete_test_file,$(RESFILE))
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "prout" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "toto" "tata" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
 #			< test cat | ls > test/file2
 #			$(VALGRIND) ./$(NAME) $(TESTPATH) cat ls $(TESTPATH)/$(TESTFILE2)
 #			< test ls | ls > test/file2

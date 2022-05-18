@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 08:45:30 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/17 15:19:41 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/18 08:00:40 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ void	ft_lst_clear(t_list **lst, void (*f)(void *));
  * @return t_list * | NULL: error or no next obj, != 0: Next obj address
  */
 t_list	*ft_lst_delbyobj(t_list *obj, void (*f)(void *));
+
+/**
+ * @brief Clear all object from the list and free the list
+ *
+ * @param t_list **lst: List | void (*f): Delete content function
+ * @return N/A
+ */
+void	ft_lst_free(t_list **lst, void (*f)(void *));
 
 /**
  * @brief Return the address of the last object address from the input obj

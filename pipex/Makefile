@@ -46,6 +46,7 @@ LISTPATH	:=	list
 RM		:=	rm -rf
 
 PPX_SRCS	:=	pipex.c\
+			ppx_file_permission.c\
 			ppx_pipex_run.c
 
 CMD_SRCS	:=	ppx_cmd_free.c\
@@ -145,18 +146,31 @@ test_ls:
 
 test:
 			@$(call f_delete_test_file,$(RESFILE))
-			$(VALGRIND) ./$(NAME) $(TESTPATH) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "prout" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "toto" "tata" $(TESTPATH)/$(TESTFILE2) | tee -a $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" | tee -a $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "prout" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "toto" "tata" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+#			cat $(RESFILE)
 #			< test cat | ls > test/file2
 #			$(VALGRIND) ./$(NAME) $(TESTPATH) cat ls $(TESTPATH)/$(TESTFILE2)
 #			< test ls | ls > test/file2

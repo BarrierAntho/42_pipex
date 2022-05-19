@@ -46,6 +46,11 @@ int	main(int argc, char **argv, char **envp)
 }
 ```
 
+:bangbang: **_JULIEN TEST**_
+- [ ] return value of the program if error
+- [ ] Write error permission or specific message when file, cmd does not exist. Must write permission function at the beginiing of the program and ensure to not execve if error on the last cmd
+
+
 ### Parsing
 [Go to content](#content)  
 :warning: **_If file does not exist or has no expected permission, the pipe chain is broken and continues to the next working pipe_**  
@@ -305,6 +310,36 @@ zsh: command not found: bdfbvvb
 zsh: permission denied: test4/file20
 ```
 
+```
+./pipex "/dev/urandom" "cat" "head -1" anb.txt
+
+./pipex /dev/null cat wc test/file2
+
+/pipex test/file1 "cat -e -n" "ls" test/file2
+
+./pipex /dev/stdin cat ls /dev/stdout
+
+./pipex '' '' '' '' 2&>std_err_file.txt
+
+chmod 000 Makefile
+./pipex Makefile cat ls outfile
+
+zsh
+unset PATH
+./pipex Makefile cat ls outfile
+./pipex Makefile /bin/cat /bin/ls outfile
+
+env -i ./pipex Makefile cat ls outfile
+
+./pipex Makefile yo yo outfile
+echo $?
+
+ulimit -n3; ./pipex Makefile cat ls outfile
+
+```
+
+:bangbang: **_`./pipex /dev/stdin cat ls /dev/stdout` where /dev/stdin seems like here doc_**
+
 ## Sources :link:
 [Go to content](#content)  
 ### Access
@@ -317,3 +352,6 @@ zsh: permission denied: test4/file20
 - https://github.com/dams333/42-cursus/blob/master/minishell/README.md#pipe
 - http://www.idc-online.com/technical_references/pdfs/information_technology/How_Linux_pipes_work_under_the_hood.pdf
 - http://web.cse.ohio-state.edu/~mamrak.1/CIS762/pipes_lab_notes.html
+
+## Tester
+- https://github.com/vfurmane/pipex-tester

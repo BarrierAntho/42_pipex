@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ppx_infile.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 14:31:40 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/19 18:28:47 by abarrier         ###   ########.fr       */
+/*   Created: 2022/05/19 17:41:59 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/19 18:20:47 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ppx_pipex_infile(t_cmd *cmd)
 {
-	t_list	**list;
+	int	infile;
 
-	if (argc != 5)
-		return (ft_error("main", "argc", 0, ERR_ARG));
-	list = ft_lst_init();
-	if (!list)
-		return (1);
-	if (ppx_lst_set(argc, argv, envp, list))
-	{
-		ft_lst_free(list, &ppx_cmd_free);
-		return (2);
-	}
-	ppx_pipex_run(argc, argv, list);
-	//ft_lst_show(list, &ppx_cmd_show);
-	ft_lst_free(list, &ppx_cmd_free);
-	return (0);
+
+	return (1);
 }

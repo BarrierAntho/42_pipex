@@ -46,7 +46,7 @@ LISTPATH	:=	list
 RM		:=	rm -rf
 
 PPX_SRCS	:=	pipex.c\
-			ppx_file_permission.c\
+			ppx_file_access.c\
 			ppx_pipex_run.c
 
 CMD_SRCS	:=	ppx_cmd_free.c\
@@ -59,7 +59,9 @@ CMD_SRCS	:=	ppx_cmd_free.c\
 			ppx_cmd_setpath.c\
 			ppx_cmd_show.c
 
-LIST_SRCS	:=	ppx_lst_set.c
+LIST_SRCS	:=	ppx_lst_fd.c\
+			ppx_lst_fd_in_out.c\
+			ppx_lst_set.c
 
 SRCS		:=	$(PPX_SRCS)\
 			$(CMD_SRCS)\

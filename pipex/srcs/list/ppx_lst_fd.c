@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ppx_lst_fd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 14:31:40 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/19 18:28:47 by abarrier         ###   ########.fr       */
+/*   Created: 2022/05/19 18:22:15 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/19 19:15:30 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ppx_lst_fd(int argc, char **argv, t_list **list)
 {
-	t_list	**list;
+	t_list	*obj;
+	int		npipe;
 
-	if (argc != 5)
-		return (ft_error("main", "argc", 0, ERR_ARG));
-	list = ft_lst_init();
-	if (!list)
+	obj = *list;
+	npipe = argc - NOT_COMMAND;
+	if (ppx_lst_fd_in_out(argc, argv, obj) != 0)
 		return (1);
-	if (ppx_lst_set(argc, argv, envp, list))
-	{
-		ft_lst_free(list, &ppx_cmd_free);
-		return (2);
-	}
-	ppx_pipex_run(argc, argv, list);
-	//ft_lst_show(list, &ppx_cmd_show);
-	ft_lst_free(list, &ppx_cmd_free);
 	return (0);
 }

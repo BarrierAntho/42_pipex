@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ppx_file_access.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 14:31:40 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/19 18:28:47 by abarrier         ###   ########.fr       */
+/*   Created: 2022/05/19 15:17:36 by abarrier          #+#    #+#             */
+/*   Updated: 2022/05/19 19:02:34 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ppx_file_access(char *file, int mode)
 {
-	t_list	**list;
-
-	if (argc != 5)
-		return (ft_error("main", "argc", 0, ERR_ARG));
-	list = ft_lst_init();
-	if (!list)
-		return (1);
-	if (ppx_lst_set(argc, argv, envp, list))
+//	if (mode == 16 && access(file, F_OK) != 0)
+//		return (16);
+	if (access(file, F_OK) != 0)
 	{
-		ft_lst_free(list, &ppx_cmd_free);
+		ft_shell_msg(ENOENT, file);
+		return (8);
+	}
+	else if (mode == 1 && access(file, X_OK) != 0)
+	{
+		ft_shell_msg(EACCES, file);
+		return (1);
+	}
+	else if (mode == 2 && access(file, W_OK) != 0)
+	{
+		ft_shell_msg(EACCES, file);
 		return (2);
 	}
-	ppx_pipex_run(argc, argv, list);
-	//ft_lst_show(list, &ppx_cmd_show);
-	ft_lst_free(list, &ppx_cmd_free);
+	else if (mode == 4 && access(file, R_OK) != 0)
+	{
+		ft_shell_msg(EACCES, file);
+		return (4);
+	}
 	return (0);
 }

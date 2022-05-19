@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:07:42 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 13:15:20 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:30:25 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_cmd	*ppx_cmd_init(char *arg, char **envp)
 	cmd->arg = NULL;
 	cmd->fullcmd = NULL;
 	cmd->fullpath = NULL;
+	cmd->fd_r = 0;
+	cmd->fd_w = 0;
 	if (ppx_cmd_init_prop(cmd, arg, envp))
 	{
 		free(cmd);

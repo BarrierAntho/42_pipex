@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/19 16:15:27 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:14:32 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,17 @@
 
 typedef struct s_cmd
 {
-	char			*arg;
-	char			**fullcmd;
-	char			*fullpath;
-}			t_cmd;
+	char	*arg;
+	char	**fullcmd;
+	char	*fullpath;
+	int		fd_r;
+	int		fd_w;
+	int		access;
+}		t_cmd;
 
 /***LIST**/
+int		ppx_lst_fd(int argc, char **argv, t_list **list);
+int		ppx_lst_fd_in_out(int argc, char **argv, t_list *obj);
 int		ppx_lst_set(int argc, char **argv, char **envp, t_list **list);
 
 /***COMMAND***/
@@ -59,7 +64,7 @@ char	*ppx_cmd_setpath(char *cmd, char *env);
 void	ppx_cmd_show(void *cmd);
 
 /***PIPEX***/
-int		ppx_file_permission(char *file, int mode);
+int		ppx_file_access(char *file, int mode);
 void	ppx_pipex_run(int argc, char **argv, t_list **list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 12:27:45 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 22:18:43 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/19 16:30:29 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,11 @@ void	ppx_pipex_run(int argc, char **argv, t_list **list)
 {
 	int		infile;
 	int		outfile;
-	int		resultat;
 	int		pfd[2];
 
-	infile = open(argv[1], O_RDONLY);
-	outfile = open(argv[argc - 1], O_WRONLY | O_RDWR | O_TRUNC
-			| O_CREAT, 0644);
+	int	myerr = 0;
+	myerr = ppx_file_permission(argv[1], 4);
 
-	dup2(infile, STDIN_FILENO);
 	if (pipe(pfd) != 0)
 	{
 		ft_lst_free(list, &ppx_cmd_free);
@@ -45,34 +42,55 @@ void	ppx_pipex_run(int argc, char **argv, t_list **list)
 	pid_t	pid = fork();
 	if (pid == 0)
 	{
-		ft_dprintf(1, "CHILD\n");
+		if (myerr > 0)
+		{
+			close(pfd[0]);
+			close(pfd[1]);
+			return ;
+		}
+		infile = open(argv[1], O_RDONLY);
+		dup2(infile, STDIN_FILENO);
 		t_list *obj = *list;
 		t_cmd *cmd = (t_cmd *)obj->content;
 		//ppx_cmd_show(cmd);
 		close(pfd[0]);
 		dup2(pfd[1], STDOUT_FILENO);
 		close(pfd[1]);
+		close(infile);
 		execve(cmd->fullcmd[0], cmd->fullcmd, NULL);
 		ft_shell_msg("TEST", cmd->fullcmd[0]);
 	}
 	else
 	{
-		ft_dprintf(1, "PARENT\n");
+		if (ppx_file_permission(argv[argc - 1], 16) == 16)
+		{
+			outfile = open(argv[argc - 1], O_WRONLY | O_TRUNC
+				| O_CREAT, 0644);
+			close(pfd[0]);
+			close(pfd[1]);
+			return ;
+		}
+		if (ppx_file_permission(argv[argc - 1], 2) == 2)
+			return ;
+		outfile = open(argv[argc - 1], O_WRONLY | O_TRUNC
+			| O_CREAT, 0644);
 		t_list *obj2 = *list;
 		obj2 = obj2->next;
 		t_cmd *cmd2 = (t_cmd *)obj2->content;
 		//ppx_cmd_show(cmd2);
-		close(pfd[1]);
+		//waitpid(-1, NULL, 0);
 		dup2(pfd[0], STDIN_FILENO);
+		dup2(outfile, STDOUT_FILENO);
+		close(pfd[1]);
 		close(pfd[0]);
-		waitpid(-1, &resultat, 0);
+		close(outfile);
 		execve(cmd2->fullcmd[0], cmd2->fullcmd, NULL);
 		ft_shell_msg("TEST", cmd2->fullcmd[0]);
 	}
-
+/*
 	if (infile > 0)
 		close(infile);
 	if (outfile > 0)
 		close(outfile);
-	(void)list;
+*/
 }

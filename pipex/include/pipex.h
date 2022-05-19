@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 13:16:20 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:15:27 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*ppx_cmd_setpath(char *cmd, char *env);
 void	ppx_cmd_show(void *cmd);
 
 /***PIPEX***/
+int		ppx_file_permission(char *file, int mode);
 void	ppx_pipex_run(int argc, char **argv, t_list **list);
 
 #endif

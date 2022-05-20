@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:17:36 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/19 19:02:34 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:08:33 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	ppx_file_access(char *file, int mode)
 {
-//	if (mode == 16 && access(file, F_OK) != 0)
-//		return (16);
 	if (access(file, F_OK) != 0)
 	{
 		ft_shell_msg(ENOENT, file);

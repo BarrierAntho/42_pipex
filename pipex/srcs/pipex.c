@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:31:40 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/20 15:57:46 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:50:18 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_list	**list;
 
-//	if (argc != 5)
-//		return (ft_error("main", "argc", 0, ERR_ARG));
+	if (argc != 5)
+		return (ft_error("main", "argc", 0, ERR_ARG));
 	list = ft_lst_init();
 	if (!list)
 		return (1);

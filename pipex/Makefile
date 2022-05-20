@@ -2,7 +2,10 @@
 TESTPATH	:=	test
 TESTFILE1	:=	file1
 TESTFILE2	:=	file2
-RESFILE		:=	res.txt
+DIR_F1		:=	$(TESTPATH)/$(TESTFILE1)
+DIR_F2		:=	$(TESTPATH)/$(TESTFILE2)
+RES_ORI		:=	res_origin.txt
+RES_MYPPX		:=	res_mypppx.txt
 
 # Color definition
 BASE		:=	\033[
@@ -31,7 +34,7 @@ CC		:=	cc
 CFLAGS		:=	-MMD -Wall -Wextra -Werror
 #CFLAGSADD	:=	-Wconversion -g3 -fsanitize=address
 #CFLAGSADD	:=	-g3 -fsanitize=address
-#CFLAGSADD	:=
+CFLAGSADD	:=
 #VALGRIND	:=	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
 VALGRIND	:=	
 
@@ -116,79 +119,57 @@ norme:
 			norminette
 			@echo $(SEP_P)
 
-ori_0p:
-			make --no-print-directory -i test_echo
-			make --no-print-directory -i test_ls
-
 mktest:
 			@echo "$(YE)$(SEP_P)$(NC)"
-			@$(call f_delete_test_data,$(TESTPATH))
+			@$(call f_delete_test_data,$(TESTPATH),$(RES_ORI),$(RES_MYPPX))
 			@echo "$(YE)$(SEP_P)$(NC)"
 			@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
 	
-test_echo:
-			echo ""
-			@echo "$(YE)$(SEP_P)$(NC)"
-			echo "test"
-			@echo "$(YE)$(SEP_P)$(NC)"
-			echo Hello World
-			@echo "$(YE)$(SEP_P)$(NC)"
-			@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
-			echo $(TESTPATH)
-			@$(call f_delete_test_data,$(TESTPATH))
-			@echo "$(YE)$(SEP_P)$(NC)"
-			@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
-			< $(TESTPATH)/$(TESTFILE1) echo
-			@$(call f_delete_test_data,$(TESTPATH))
-			@echo "$(YE)$(SEP_P)$(NC)"
-
-test_ls:
-			ls ""
-			@echo "$(YE)$(SEP_P)$(NC)"
-			ls
-			@echo "$(YE)$(SEP_P)$(NC)"
-			@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
-			ls $(TESTPATH)
-			@$(call f_delete_test_data,$(TESTPATH))
-			@echo "$(YE)$(SEP_P)$(NC)"
-
 test:
-			@$(call f_delete_test_file,$(RESFILE))
-#			$(VALGRIND) ./$(NAME) '' '' '' ''
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2)
-#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "head" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
-#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
-#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
-#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
-#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
-#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "prout" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
-#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "toto" "tata" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE
-#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
-#			cat $(RESFILE)
+			@$(call f_delete_test_file,$(RES_MYPPX))
+			@$(call f_delete_test_file,$(RES_ORI))
+			$(VALGRIND) ./$(NAME) '' '' '' ''
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "head" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "/usr/bin/cat" "prout" $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "toto" "tata" $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RES_MYPPX
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RES_MYPPX)
+#			cat $(RES_MYPPX)
 #			< test cat | ls > test/file2
 #			$(VALGRIND) ./$(NAME) $(TESTPATH) cat ls $(TESTPATH)/$(TESTFILE2)
 #			< test ls | ls > test/file2
 #			$(VALGRIND) ./$(NAME) $(TESTPATH) ls ls $(TESTPATH)/$(TESTFILE2)
+
+
+test_ori:
+			$(call f_test_ori)
+
+test_myppx:
+			$(call f_test_myppx)
 
 define f_create_test_dir
 	@mkdir -p $(1) && echo "$(CY)Creation of test directory \"$(1)\" successed$(NC)"
@@ -214,9 +195,42 @@ define f_create_test_data
 endef
 
 define f_delete_test_data
-	$(call f_delete_test_dir,$(1))
+	@$(call f_delete_test_dir,$(1))
+	@$(call f_delete_test_file,$(2))
+	@$(call f_delete_test_file,$(3))
+endef
+
+define f_test_ori
+
+	@$(call f_delete_test_file,$(TESTPATH))
+	@$(call f_delete_test_file,$(RES_ORI))
+	@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
+	< $(DIR_F1) cat | wc > $(DIR_F2)
+	cat $(DIR_F2) >> $(RES_ORI)
+	cat $(RES_ORI)
+	@echo "$(YE)$(SEP_P)$(NC)"
+
+endef
+
+define f_test_myppx
+	@$(call f_delete_test_file,$(TESTPATH))
+	@$(call f_delete_test_file,$(RES_MYPPX))
+	@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
+	./$(NAME) $(DIR_F1) "cat" "wc" $(DIR_F2)
+	cat $(DIR_F2) >> $(RES_MYPPX)
+	@echo "$(YE)$(SEP_P)$(NC)"
+	@$(call f_delete_test_file,$(TESTPATH))
+	@$(call f_create_test_data,$(TESTPATH),$(TESTFILE1),$(TESTFILE2))
+	./$(NAME) $(DIR_F1) "cat" "ls" $(DIR_F2)
+	cat $(DIR_F2) >> $(RES_MYPPX)
+	@echo "$(YE)$(SEP_P)$(NC)"
+	cat $(RES_MYPPX)
+endef
+
+define f_test_compare
+	diff $(1) $(2)
 endef
 
 -include $(DEPS)
 
-.PHONY:			all clean fclean re norme ori_0p mktest test_echo test_ls test
+.PHONY:			all clean fclean re norme mktest test test_ori test_myppx

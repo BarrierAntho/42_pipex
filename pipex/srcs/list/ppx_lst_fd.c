@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:22:15 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/19 19:15:30 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:08:51 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ int	ppx_lst_fd(int argc, char **argv, t_list **list)
 	int		npipe;
 
 	obj = *list;
-	npipe = argc - NOT_COMMAND;
-	if (ppx_lst_fd_in_out(argc, argv, obj) != 0)
-		return (1);
+	if (!obj)
+		return (ft_error("lst_fd", "obj", 0, ERR_NOOBJ));
+	npipe = argc - NOT_COMMAND - 1;
+	ppx_lst_fd_infile(argv, obj);
+	ppx_lst_fd_outfile(argc, argv, ft_lst_last(obj));
+	ppx_lst_fd_pfd(obj, NULL, NULL, npipe);
 	return (0);
 }

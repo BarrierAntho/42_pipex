@@ -53,7 +53,15 @@ int	main(int argc, char **argv, char **envp)
 
 ### Parsing
 [Go to content](#content)  
-:warning: **_If file does not exist or has no expected permission, the pipe chain is broken and continues to the next working pipe_**  
+:warning: **_If file does not exist or has no expected permission, the pipe chain is broken and continues to the next working pipe_**   
+> **Example:**  
+```
+< test/file2 cat | echo "Hello Wolrd" | tee -a "toto.txt" | wc > test/file1
+zsh: no such file or directory: test/file2
+zsh: no such file or directory: test/file1
+cat toto.txt 
+Hello Wolrd
+```
 - [ ] Arguments
 	- [ ] Only five arguments
 	- [ ] 2nd and last arguments are filenames

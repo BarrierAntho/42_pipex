@@ -30,7 +30,7 @@ NAME		:=	pipex
 CC		:=	cc
 CFLAGS		:=	-MMD -Wall -Wextra -Werror
 #CFLAGSADD	:=	-Wconversion -g3 -fsanitize=address
-CFLAGSADD	:=	-g3 -fsanitize=address
+#CFLAGSADD	:=	-g3 -fsanitize=address
 #CFLAGSADD	:=
 #VALGRIND	:=	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
 VALGRIND	:=	
@@ -48,7 +48,8 @@ RM		:=	rm -rf
 PPX_SRCS	:=	pipex.c\
 			ppx_file_access.c\
 			ppx_pipex_cmd.c\
-			ppx_pipex_run.c
+			ppx_pipex_run.c\
+			ppx_pipex_wait.c
 
 CMD_SRCS	:=	ppx_cmd_close_fd.c\
 			ppx_cmd_free.c\
@@ -154,10 +155,7 @@ test_ls:
 test:
 			@$(call f_delete_test_file,$(RESFILE))
 #			$(VALGRIND) ./$(NAME) '' '' '' ''
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
-			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
-			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2)
 #			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "head" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
 #			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
 #			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)

@@ -6,87 +6,33 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 12:27:45 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/19 19:17:10 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:06:21 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/*
-	dup2(infile, STDIN_FILENO);
-	pid_t	pid = fork();
-	if (pid == 0)
-	{
-		t_list *obj = *list;
-		t_cmd *cmd = (t_cmd *)obj->content;
-		//ppx_cmd_show(cmd);
-		execve(cmd->fullcmd[0], cmd->fullcmd, NULL);
-	}
-	else
-		waitpid(-1, &resultat, 0);
-*/
-void	ppx_pipex_run(int argc, char **argv, t_list **list)
+void	ppx_pipex_run(int argc, t_list **list)
 {
-	int		infile;
-	int		outfile;
-	int		pfd[2];
+	t_list	*obj;
+	pid_t	pid;
+	int		npipe;
+	int		i;
 
-	int	myerr = 0;
-	myerr = ppx_file_access(argv[1], 4);
-
-	if (pipe(pfd) != 0)
+	obj = *list;
+	npipe = argc - NOT_COMMAND - 1;
+	i = 0;
+	while (i < npipe && obj)
 	{
-		ft_lst_free(list, &ppx_cmd_free);
-		exit(EXIT_FAILURE);
-	}
-	pid_t	pid = fork();
-	if (pid == 0)
-	{
-		t_list *obj = *list;
-		t_cmd *cmd = (t_cmd *)obj->content;
-		//ppx_cmd_show(cmd);
-		if (cmd->access > 0)
+		pid = fork();
+		if (pid < 0)
 		{
-			close(pfd[0]);
-			close(pfd[1]);
-			return ;
+			ft_error("pipex_run", "fork", 0, ERR_PIPE);
+			break ;
 		}
-		infile = open(argv[1], O_RDONLY);
-		dup2(infile, STDIN_FILENO);
-		close(pfd[0]);
-		dup2(pfd[1], STDOUT_FILENO);
-		close(pfd[1]);
-		close(infile);
-		execve(cmd->fullcmd[0], cmd->fullcmd, NULL);
-		ft_shell_msg(errno, cmd->fullcmd[0]);
+		if (pid == 0)
+			ppx_pipex_cmd(list, obj);
+		obj = obj->next;
 	}
-	else
-	{
-		t_list *obj2 = *list;
-		obj2 = obj2->next;
-		t_cmd *cmd2 = (t_cmd *)obj2->content;
-		if (cmd2->access > 0)
-		{
-			close(pfd[0]);
-			close(pfd[1]);
-			return ;
-		}
-		outfile = open(argv[argc - 1], O_WRONLY | O_TRUNC
-			| O_CREAT, 0644);
-		//ppx_cmd_show(cmd2);
-		//waitpid(-1, NULL, 0);
-		dup2(pfd[0], STDIN_FILENO);
-		dup2(outfile, STDOUT_FILENO);
-		close(pfd[1]);
-		close(pfd[0]);
-		close(outfile);
-		execve(cmd2->fullcmd[0], cmd2->fullcmd, NULL);
-		ft_shell_msg(errno, cmd2->fullcmd[0]);
-	}
-/*
-	if (infile > 0)
-		close(infile);
-	if (outfile > 0)
-		close(outfile);
-*/
+	ft_lst_func_lst(list, &ppx_cmd_close_fd);
 }

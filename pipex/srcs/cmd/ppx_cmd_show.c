@@ -6,32 +6,37 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:10:12 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/17 16:39:25 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:49:37 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ppx_cmd_show(void *cmd)
+void	ppx_cmd_show(void *content)
 {
-	t_cmd	*obj;
+	t_cmd	*cmd;
 	int		i;
 
-	if (!cmd)
+	if (!content)
 		return ;
-	obj = (t_cmd *)cmd;
+	cmd = (t_cmd *)content;
 	i = 0;
-	if (obj->arg)
-		ft_dprintf(1, "arg: %s\n", obj->arg);
-	if (obj->fullcmd)
+	if (cmd->arg)
+		ft_dprintf(1, "arg: %s\n", cmd->arg);
+	if (cmd->fullcmd)
 	{
-		ft_dprintf(1, "fullcmd:\n");
-		while (obj->fullcmd[i])
+		while (cmd->fullcmd[i])
 		{
-			ft_dprintf(1, "fullcmd[%d]: %s\n", i, obj->fullcmd[i]);
+			ft_dprintf(1, "fullcmd[%d]: %s\n", i, cmd->fullcmd[i]);
 			i++;
 		}
 	}
-	if (obj->fullpath)
-		ft_dprintf(1, "fullpath: %s\n", obj->fullpath);
+	else
+		ft_dprintf(1, "fullcmd: NULL\n");
+	if (cmd->fullpath)
+		ft_dprintf(1, "fullpath: %s\n", cmd->fullpath);
+	else
+		ft_dprintf(1, "fullpath: NULL\n");
+	ft_dprintf(1, "pfd[0]: %d\tpfd[1]: %d\n", cmd->fd_r, cmd->fd_w);
+	ft_dprintf(1, "%s\n", SEP_P);
 }

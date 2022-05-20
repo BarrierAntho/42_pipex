@@ -6,28 +6,28 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:08:21 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 13:13:25 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:03:17 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-//							(void)envp;
-//							cmd->fullpath = NULL;
 int	ppx_cmd_init_prop(t_cmd *cmd, char *arg, char **envp)
 {
 	if (!cmd)
 		return (ft_error("cmd_init_prop", "cmd", 0, ERR_MALLOC));
 	cmd->arg = arg;
+	if (*arg == '\0')
+	{
+		if (ppx_cmd_init_prop_null(cmd))
+			return (ft_error("cmd_init_prop", "arg null",
+					0, ERR_MALLOC));
+		return (0);
+	}
 	cmd->fullcmd = ft_split(arg, ARG_SEP);
 	if (!cmd->fullcmd)
 		return (ft_error("cmd_init_prop", "fullcmd", 0, ERR_MALLOC));
 	cmd->fullpath = ppx_cmd_getvalidpath(cmd->fullcmd[0], envp);
-	if (!cmd->fullpath)
-	{
-		free(ft_free_ptrptr_str(cmd->fullcmd));
-		return (ft_error("cmd_init_prop", "fullpath", 0, ERR_MALLOC));
-	}
 	if (cmd->fullcmd[0] != cmd->fullpath)
 	{
 		free(cmd->fullcmd[0]);

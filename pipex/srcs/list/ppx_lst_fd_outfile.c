@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:27:13 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/20 09:12:10 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:41:00 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	ppx_lst_fd_outfile(int argc, char **argv, t_list *obj)
 			if (cmd->fd_w < 0)
 				return (ft_shell_msg(errno, argv[argc - 1]));
 		}
+		else if (access(argv[argc - 1], O_DIRECTORY) != 0)
+			return (ft_shell_msg(EISDIR, argv[argc - 1]));
 		else
 			return (ppx_file_access(argv[argc - 1], 2));
 	}

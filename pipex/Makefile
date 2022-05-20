@@ -30,8 +30,8 @@ NAME		:=	pipex
 CC		:=	cc
 CFLAGS		:=	-MMD -Wall -Wextra -Werror
 #CFLAGSADD	:=	-Wconversion -g3 -fsanitize=address
-#CFLAGSADD	:=	-g3 -fsanitize=address
-CFLAGSADD	:=
+CFLAGSADD	:=	-g3 -fsanitize=address
+#CFLAGSADD	:=
 #VALGRIND	:=	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
 VALGRIND	:=	
 
@@ -47,12 +47,15 @@ RM		:=	rm -rf
 
 PPX_SRCS	:=	pipex.c\
 			ppx_file_access.c\
+			ppx_pipex_cmd.c\
 			ppx_pipex_run.c
 
-CMD_SRCS	:=	ppx_cmd_free.c\
+CMD_SRCS	:=	ppx_cmd_close_fd.c\
+			ppx_cmd_free.c\
 			ppx_cmd_getvalidpath.c\
 			ppx_cmd_init.c\
 			ppx_cmd_init_prop.c\
+			ppx_cmd_init_prop_null.c\
 			ppx_cmd_loop_envline.c\
 			ppx_cmd_loop_envp.c\
 			ppx_cmd_loop_envp_str.c\
@@ -60,7 +63,9 @@ CMD_SRCS	:=	ppx_cmd_free.c\
 			ppx_cmd_show.c
 
 LIST_SRCS	:=	ppx_lst_fd.c\
-			ppx_lst_fd_in_out.c\
+			ppx_lst_fd_infile.c\
+			ppx_lst_fd_outfile.c\
+			ppx_lst_fd_pfd.c\
 			ppx_lst_set.c
 
 SRCS		:=	$(PPX_SRCS)\
@@ -148,10 +153,19 @@ test_ls:
 
 test:
 			@$(call f_delete_test_file,$(RESFILE))
-			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			$(VALGRIND) ./$(NAME) '' '' '' ''
+			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
 			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
 			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
 			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "head" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
+#			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "ls" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
+#			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
+#			@echo "$(RD)$(SEP_P)$(NC)" >> $(RESFILE)
 #			$(VALGRIND) ./$(NAME) $(TESTPATH)/$(TESTFILE1) "cat -e -n" "wc" $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)
 #			@echo "$(YE)$(SEP_P)$(NC)" >> $(RESFILE)
 #			cat $(TESTPATH)/$(TESTFILE2) >> $(RESFILE)

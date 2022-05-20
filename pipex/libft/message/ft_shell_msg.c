@@ -6,20 +6,20 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:05:52 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/16 12:25:08 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 08:07:12 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_message.h"
 #include "ft_dprintf.h"
 
-int	ft_shell_msg(char *type, char *data)
+int	ft_shell_msg(int err, char *data)
 {
 	int		res;
 	char	*message;
 
-	message = strerror(errno);
-	res = ft_dprintf(2, "%s%s: %s: %s%s\n", RD, type, message, data, NC);
+	message = strerror(err);
+	res = ft_dprintf(2, "Error: %s: %s\n", message, data);
 	if (res <= 0)
 		res = 1;
 	return (res);

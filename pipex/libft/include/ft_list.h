@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 08:45:30 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 12:51:58 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:51:01 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ t_list	*ft_lst_delbyobj(t_list *obj, void (*f)(void *));
 void	ft_lst_free(t_list **lst, void (*f)(void *));
 
 /**
+ * @brief Do function on all object from the list
+ *
+ * @param t_list **lst: List | void (*f): Function
+ * @return N/A
+ */
+void	ft_lst_func_lst(t_list **lst, void (*f)(void *));
+
+/**
  * @brief Init a list and set to NULL the *list
  *
  * @param N/A
@@ -88,13 +96,5 @@ t_list	*ft_lst_new(void *content);
  * @return size_t | >= 0
  */
 size_t	ft_lst_size(t_list **lst);
-
-/**
- * @brief Display content of all object from the list
- *
- * @param t_list **lst: List | void (*f): Display content function
- * @return N/A
- */
-void	ft_lst_show(t_list **lst, void (*f)(void *));
 
 #endif

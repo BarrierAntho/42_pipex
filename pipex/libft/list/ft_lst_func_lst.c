@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_show.c                                      :+:      :+:    :+:   */
+/*   ft_lst_func_lst.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:16:15 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/17 16:35:41 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:49:42 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_list.h"
 
-void	ft_lst_show(t_list **list, void (*f)(void *))
+void	ft_lst_func_lst(t_list **list, void (*f)(void *))
 {
 	t_list	*obj;
 

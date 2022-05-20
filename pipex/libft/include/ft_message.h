@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:41:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/18 13:15:37 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/20 08:07:43 by abarrier         ###   ########.fr       */
 /*   Updated: 2022/04/11 07:58:28 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -52,14 +52,14 @@
 int	ft_error(char *f, char *data, char c, char *msg);
 
 /**
- * @brief Print error message on stderr in RED color according to 
+ * @brief Print error message on stderr according to 
  * the following structure
- * 	Type: Error message: Object
+ * 	Error: message: object
  *
- * @param char *s: Type of the message | char *obj: Data of the error
+ * @param int: Error message number | char *obj: Data of the error
  * @return int | >= 1: Total of printed characters
  */
-int	ft_shell_msg(char *type, char *data);
+int	ft_shell_msg(int err, char *data);
 
 /**
  * @brief Print warning message on stdout in YELLOW color according to

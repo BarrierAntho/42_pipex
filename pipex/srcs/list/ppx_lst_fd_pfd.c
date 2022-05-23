@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:26:59 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/23 07:42:56 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/23 17:35:27 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ppx_lst_fd_pfd(t_list *obj, t_cmd *cmd1, t_cmd *cmd2, int npipe)
 	int		i;
 
 	i = 0;
-	while (i < npipe)
+	while (obj && i < npipe)
 	{
 		cmd1 = (t_cmd *)obj->content;
 		cmd2 = (t_cmd *)obj->next->content;

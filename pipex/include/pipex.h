@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/23 08:29:18 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/23 17:35:06 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ppx_cmd_show(void *content);
 /***PIPEX***/
 int		ppx_file_access(char *file, int mode);
 void	ppx_pipex_cmd(t_list **list, t_list *obj);
-int		ppx_pipex_run(int argc, t_list **list);
-int		ppx_pipex_wait(int npipe);
+int		ppx_pipex_run(int ncmd, t_list **list);
+int		ppx_pipex_wait(int ncmd, int pid);
 
 #endif

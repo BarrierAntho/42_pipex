@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:09:43 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/20 17:25:13 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/23 08:29:30 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ppx_pipex_cmd(t_list **list, t_list *obj)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)obj->content;
-	if (cmd->fd_r > 0)
+	if (cmd->fd_r >= 0)
 		dup2(cmd->fd_r, STDIN_FILENO);
 	else
 	{

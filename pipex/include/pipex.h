@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:32:35 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/20 16:01:48 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/23 08:29:18 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_cmd
 	char	*fullpath;
 	int		fd_r;
 	int		fd_w;
+	int		access;
 }		t_cmd;
 
 /***LIST**/
@@ -56,7 +57,7 @@ int		ppx_lst_set(int argc, char **argv, char **envp, t_list **list);
 /***COMMAND***/
 void	ppx_cmd_close_fd(void *content);
 void	ppx_cmd_free(void *content);
-char	*ppx_cmd_getvalidpath(char *cmd, char **envp);
+char	*ppx_cmd_getvalidpath(t_cmd *cmd, char **envp);
 t_cmd	*ppx_cmd_init(char *arg, char **envp);
 int		ppx_cmd_init_prop(t_cmd *cmd, char *arg, char **envp);
 int		ppx_cmd_init_prop_null(t_cmd *cmd);
@@ -69,7 +70,7 @@ void	ppx_cmd_show(void *content);
 /***PIPEX***/
 int		ppx_file_access(char *file, int mode);
 void	ppx_pipex_cmd(t_list **list, t_list *obj);
-void	ppx_pipex_run(int argc, t_list **list);
-void	ppx_pipex_wait(int npipe);
+int		ppx_pipex_run(int argc, t_list **list);
+int		ppx_pipex_wait(int npipe);
 
 #endif

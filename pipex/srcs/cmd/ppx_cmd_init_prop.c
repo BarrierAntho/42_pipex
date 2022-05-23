@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:08:21 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/20 16:03:17 by abarrier         ###   ########.fr       */
+/*   Updated: 2022/05/23 08:14:08 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ppx_cmd_init_prop(t_cmd *cmd, char *arg, char **envp)
 	cmd->fullcmd = ft_split(arg, ARG_SEP);
 	if (!cmd->fullcmd)
 		return (ft_error("cmd_init_prop", "fullcmd", 0, ERR_MALLOC));
-	cmd->fullpath = ppx_cmd_getvalidpath(cmd->fullcmd[0], envp);
+	cmd->fullpath = ppx_cmd_getvalidpath(cmd, envp);
 	if (cmd->fullcmd[0] != cmd->fullpath)
 	{
 		free(cmd->fullcmd[0]);

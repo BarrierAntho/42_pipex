@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:00:11 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/23 18:18:40 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/23 20:24:26 by antho            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ppx_pipex_wait(int ncmd, int pid)
 	status = 1;
 	i = 0;
 	waitpid(pid, &status, 0);
+	ncmd--;
 	while (i < ncmd)
 	{
 		waitpid(-1, NULL, 0);

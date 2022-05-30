@@ -48,8 +48,11 @@ LISTPATH	:=	list
 
 RM		:=	rm -rf
 
-PPX_SRCS	:=	pipex.c\
-			ppx_file_access.c\
+MAIN_SRCS	:=	pipex.c
+
+MAIN_BONUS_SRCS	:=	pipex_bonus.c
+
+PPX_SRCS	:=	ppx_file_access.c\
 			ppx_pipex_cmd.c\
 			ppx_pipex_run.c\
 			ppx_pipex_wait.c
@@ -72,13 +75,23 @@ LIST_SRCS	:=	ppx_lst_fd.c\
 			ppx_lst_fd_pfd.c\
 			ppx_lst_set.c
 
-SRCS		:=	$(PPX_SRCS)\
+SRCS		:=	$(MAIN_SRCS)\
+			$(PPX_SRCS)\
+			$(CMD_SRCS)\
+			$(LIST_SRCS)
+
+SRCS_BONUS	:=	$(MAIN_BONUS_SRCS)\
+			$(PPX_SRCS)\
 			$(CMD_SRCS)\
 			$(LIST_SRCS)
 
 OBJS		=	$(addprefix $(OPATH)/, $(SRCS:.c=.o))
 
+OBJS_BONUS	=	$(addprefix $(OPATH)/, $(SRCS_BONUS:.c=.o))
+
 DEPS		=	$(OBJS:.o=.d)
+
+DEPS_BONUS	=	$(OBJS_BONUS:.o=.d)
 
 vpath %.h $(IPATH)
 vpath %.c $(SRCSPATH)\
@@ -97,6 +110,8 @@ $(NAME):		$(OBJS)
 
 $(OBJS):		| $(OPATH)
 
+$(OBJS_BONUS):		| $(OPATH)
+
 $(OPATH):
 			mkdir -p $(OPATH)
 
@@ -113,6 +128,10 @@ re:
 			make re -C $(FTPATH)
 			make fclean
 			make all
+
+bonus:			$(OBJS_BONUS)
+			make -C $(FTPATH)
+			$(CC) $(CFLAGS) $(CFLAGSADD) $(OBJS_BONUS) -I $(IPATH) -I $(FTPATH)/$(IFT) -L$(FTPATH) -l$(FT) -o $(NAME)
 
 norme:
 			@echo norme:
@@ -233,4 +252,6 @@ endef
 
 -include $(DEPS)
 
-.PHONY:			all clean fclean re norme mktest test test_ori test_myppx
+-include $(DEPS_BONUS)
+
+.PHONY:			all clean fclean re bonus norme mktest test test_ori test_myppx

@@ -6,7 +6,7 @@
 /*   By: abarrier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:31:40 by abarrier          #+#    #+#             */
-/*   Updated: 2022/05/23 18:30:57 by antho            ###   ########.fr       */
+/*   Updated: 2022/05/30 10:19:44 by abarrier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_list	**list;
-	int		npipe;
 	int		res;
 
 	if (argc != 5)
@@ -30,8 +29,7 @@ int	main(int argc, char **argv, char **envp)
 		return (2);
 	}
 	ppx_lst_fd(argc, argv, list);
-	npipe = argc - NOT_COMMAND;
-	res = ppx_pipex_run(npipe, list);
+	res = ppx_pipex_run(argc - NOT_COMMAND, list);
 	ft_lst_func_lst(list, &ppx_cmd_close_fd);
 	ft_lst_free(list, &ppx_cmd_free);
 	if (res > 0)
